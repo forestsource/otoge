@@ -47,3 +47,7 @@ Thumbs.db
 
 *.log #log files, for some plugins
 *.pyc #python bytecode cache, for some plugins.
+*.mp3
+*.wav
+*.exe
+*.ogg
