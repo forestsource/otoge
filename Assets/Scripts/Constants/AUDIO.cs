@@ -4,6 +4,7 @@
 public static class AUDIO
 {
 	  public const string BGM_MENU = "Menu";
+	  public const string BGM_ONTHEEARTH = "OnTheEarth";
 	
 	  public const string SE_BIRD = "Bird";
 	  public const string SE_ENTER = "Enter";

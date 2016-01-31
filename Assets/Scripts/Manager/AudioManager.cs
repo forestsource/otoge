@@ -17,7 +17,10 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 	public const float BGM_FADE_SPEED_RATE_HIGH = 0.9f;
 	public const float BGM_FADE_SPEED_RATE_LOW = 0.3f;
 	private float _bgmFadeSpeedRate = BGM_FADE_SPEED_RATE_HIGH;
-
+    
+    //現在の曲名
+    private string _nowBGMName;
+    
 	//次流すBGM名、SE名
 	private string _nextBGMName;
 	private string _nextSEName;
@@ -47,9 +50,12 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 		//リソースフォルダから全SE&BGMのファイルを読み込みセット
 		_bgmDic = new Dictionary<string, AudioClip> ();
 		_seDic  = new Dictionary<string, AudioClip> ();
+        
 
 		object[] bgmList = Resources.LoadAll ("Audio/BGM");
 		object[] seList  = Resources.LoadAll ("Audio/SE");
+        //object[] musicList  = Resources.LoadAll ("Audio/MUSIC");
+        
 
 		foreach (AudioClip bgm in bgmList) {
 			_bgmDic [bgm.name] = bgm;
@@ -114,7 +120,7 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 			_nextBGMName = bgmName;
 			FadeOutBGM (fadeSpeedRate);
 		}
-
+        _nowBGMName = bgmName;
 	}
 
 	/// <summary>
@@ -146,6 +152,13 @@ public class AudioManager : SingletonMonoBehaviour<AudioManager>
 	/// </summary>
     public float LengthBGM(){
         return AttachBGMSource.clip.length;
+    }
+    
+    /// <summary>
+	/// BGM名を返す。
+	/// </summary>
+    public string getNowBGMName(){
+        return _nowBGMName;
     }
     
 	private void Update ()
