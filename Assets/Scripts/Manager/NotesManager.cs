@@ -5,8 +5,9 @@ using System.IO;
 using System.Collections.Generic;
 
 public class NotesManager{
+    private ScoreManager scoremanager;
     private float audiotime;
-    private float[] Timetable;
+    private List<float> Timetable;
     private List<Note> notes;
     private List<newNote> newnotes;
     private Note note;
@@ -31,7 +32,8 @@ public class NotesManager{
     public bool keyM;
 
 	public void Init () {
-        this.CreateNotes();
+        //this.CreateNotes();
+        scoremanager = new ScoreManager();
         NotesSum = 0;
         NotesCount = 0;
         DisplayNotesCount = 0;
@@ -56,27 +58,28 @@ public class NotesManager{
         //Note数を元に配列を初期化
         notes = new List<Note>(NotesSum);
         noteobjects = new List<GameObject>(NotesSum);
-        Timetable = new float[NotesSum];
+        Timetable = new List<float>(NotesSum);
         //ファイルからノーツ情報を読み込む処理
-        for(int i=0;i<NotesSum;i++){
-            //Debug.Log("i:"+i);
+        for(int j=0; j<NotesSum; j++){
+            Debug.Log("readNotes:"+ j);
             noteobject = GameObject.Instantiate(Resources.Load("Prefabs/Sphere", typeof(GameObject))) as GameObject;
             rotation = noteobject.GetComponent<Note_Rotation>();
             note = noteobject.GetComponent<Note>();
-            note.posx = newnotes[i].posx;
-            note.posy = newnotes[i].posy;
-            note.angle = newnotes[i].angle;
-            note.scale = newnotes[i].scale;
-            note.radiusBefore = newnotes[i].radiusBefore;
-            note.DecisionTime = newnotes[i].DecisionTime;
-            note.EmitTime = newnotes[i].EmitTime;
-            note.RadiusIncrement = newnotes[i].RadiusIncrement;
-            note.TargetName = newnotes[i].TargetName;
+            note.posx = newnotes[j].posx;
+            note.posy = newnotes[j].posy;
+            note.posz = newnotes[j].posz;
+            note.angle = newnotes[j].angle;
+            note.scale = newnotes[j].scale;
+            note.radiusBefore = newnotes[j].radiusBefore;
+            note.DecisionTime = newnotes[j].DecisionTime;
+            note.EmitTime = newnotes[j].EmitTime;
+            note.RadiusIncrement = newnotes[j].RadiusIncrement;
+            note.TargetName = newnotes[j].TargetName;
             //Debug.Log(note.EmitTime);
             rotation.EmitTime = note.EmitTime;
             note.Init(noteobject);
-            note.Hidden();
-            Timetable[i] = note.EmitTime;
+            //note.Hidden();
+            Timetable.Add(note.EmitTime);
             notes.Add(note);
             noteobjects.Add(noteobject);
         }
@@ -102,13 +105,14 @@ public class NotesManager{
             //Debug.Log("End Notes");
             //Debug.Log("notescount:"+NotesCount +"  NotesSum:"+NotesSum);
         }else {
-            //Debug.Log("audiotime:"+audiotime +"  timetable:"+Timetable[NotesCount]);
-            if(audiotime >= Timetable[NotesCount]){
+            //Debug.Log("audiotime:"+audiotime +"  timetable:"+Timetable[0]);
+            if(audiotime >= Timetable[0]){
                 //Debug.Log("count"+NotesCount);  
                 notes[DisplayNotesCount].Show();
-                //Debug.Log(NotesCount+"show");
+                Debug.Log("Notes show"+NotesCount);
                 NotesCount++;
                 DisplayNotesCount++;
+                Timetable.RemoveAt(0);
             }
         }//continue           
         for(int i=0;i<DisplayNotesCount;i++){
@@ -128,6 +132,7 @@ public class NotesManager{
                         notes.RemoveAt(i);
                         this.NoteDestroy(noteobject);//避難させたオブジェクトも消す
                         DisplayNotesCount--;
+                        scoremanager.AddScore();
                     }
                 }
             }
@@ -142,6 +147,7 @@ public class NotesManager{
                         notes.RemoveAt(i);
                         this.NoteDestroy(noteobject);//避難させたオブジェクトも消す
                         DisplayNotesCount--;
+                        scoremanager.AddScore();
                     }
                 }
             }
@@ -156,6 +162,7 @@ public class NotesManager{
                         notes.RemoveAt(i);
                         this.NoteDestroy(noteobject);//避難させたオブジェクトも消す
                         DisplayNotesCount--;
+                        scoremanager.AddScore();
                     }
                 }
             }
@@ -170,11 +177,12 @@ public class NotesManager{
                         notes.RemoveAt(i);
                         this.NoteDestroy(noteobject);//避難させたオブジェクトも消す
                         DisplayNotesCount--;
+                        scoremanager.AddScore();
                     }
                 }
             }
             // 発生時間+消滅予想時間をすぎたら消す.
-            if((note.DecisionTime + note.EmitTime +2.1f) <= audiotime){
+            if((note.DecisionTime + note.EmitTime) <= audiotime){
                 Debug.Log("del Time");
                 noteobject = noteobjects[i];//避難させる          
                 noteobjects.RemoveAt(i);//リストを先に消す
@@ -188,7 +196,7 @@ public class NotesManager{
     public bool CalcTimeOut(Vector3 position1,Vector3 position2,float scale){
         distance = Vector3.Distance(position1, position2);
         //Debug.Log(distance);
-        if(distance > 1+scale){//r1+r2
+        if(distance > 1+scale && distance < 2+scale){//r1+r2
             return true;
         }else{
             return false;

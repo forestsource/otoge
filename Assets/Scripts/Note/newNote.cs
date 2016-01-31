@@ -6,6 +6,7 @@ public class newNote{
     public float scale;
     public float posx;
     public float posy;
+    public float posz;
     public float radiusBefore;
     public float radius;
     public float angle;

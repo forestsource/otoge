@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour {
     private BarManager BarManager;
     private NotesManager NotesManager;
     private AutoNotes AutoNotes;
+    private ScoreManager ScoreManager;
     private bool barmanagerStart = true;
 	void Start () {
         //BGM Start
@@ -17,10 +18,13 @@ public class GameManager : MonoBehaviour {
         barmanager = GameObject.Find("MusicBar");
         BarManager = barmanager.GetComponent<BarManager>();
         
+        //ScoreManager
+        //ScoreManager = new ScoreManager();
+        
         if (Application.loadedLevelName == "circle_music") {
             //Notes management
             NotesManager = new NotesManager();
-            NotesManager.Init(); 
+            NotesManager.Init();
             NotesManager.CreateNotes();
         } else if(Application.loadedLevelName == "create_note"){
             AutoNotes = new AutoNotes();

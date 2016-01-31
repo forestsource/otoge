@@ -6,6 +6,7 @@ public class Note : MonoBehaviour{
     public float scale;
     public float posx;
     public float posy;
+    public float posz;
     public float radiusBefore;
     public float radius;
     public float angle;
@@ -23,7 +24,7 @@ public class Note : MonoBehaviour{
     
     public void Init(GameObject noteobject){
         rend = GetComponent<Renderer>();
-        this.transform.position = new Vector3(posx,posy,2.3f);
+        this.transform.position = new Vector3(posx,posy,posz);
         this.transform.SetLocalScaleXYZ(scale);
         this.GetComponent<SphereCollider>().radius = radiusBefore;
         //rend.material.color = color;
@@ -31,10 +32,10 @@ public class Note : MonoBehaviour{
     
     public void Move(){
         sc = GetComponent<SphereCollider>();
-        scale = scale + RadiusIncrement;
+        //scale = scale + RadiusIncrement;
         this.transform.AddLocalScaleX(RadiusIncrement);
         this.transform.AddLocalScaleZ(RadiusIncrement);
-        sc.radius = sc.radius + RadiusIncrement;
+        //sc.radius = sc.radius + RadiusIncrement;
         //Debug.Log(sc.radius);
     }
     

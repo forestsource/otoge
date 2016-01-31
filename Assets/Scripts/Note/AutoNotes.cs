@@ -39,19 +39,23 @@ public class AutoNotes{
     public void GetInput(){
         if(Input.GetKeyDown(KeyCode.S)){//up_left
             Debug.Log("S");
-            this.SetNote("up_left",UpLeft.transform.position);
+            //this.SetNote("up_left",UpLeft.transform.position);
+            this.SetNote("up_left",(new Vector3(-2.25f,-1.0f,1.2f)));
         }
         if(Input.GetKeyDown(KeyCode.K)){//up_right
             Debug.Log("K");
-            this.SetNote("up_right",UpRight.transform.position);
+            //this.SetNote("up_right",UpRight.transform.position);
+            this.SetNote("up_right",(new Vector3(2.25f,-1.0f,1.2f)));
         }
         if(Input.GetKeyDown(KeyCode.X)){//down_left
             Debug.Log("X");
-            this.SetNote("down_left",DownLeft.transform.position);
+            //this.SetNote("down_left",DownLeft.transform.position);
+            this.SetNote("down_left",new Vector3(-2.25f,-1.0f,-1.40f));
         }
         if(Input.GetKeyDown(KeyCode.M)){//down_right
             Debug.Log("M");
-            this.SetNote("down_right",DownRight.transform.position);
+            //this.SetNote("down_right",DownRight.transform.position);
+            this.SetNote("down_right",new Vector3(2.25f,-1.0f,-1.40f));
         }
         if((AudioManager.Instance.GetTimeBGM() >= 5.0f) & once){
             this.outNotes();
@@ -62,14 +66,16 @@ public class AutoNotes{
     
     
     public void SetNote(string TargetName,Vector3 targetPos){
+        Debug.Log(targetPos);
         newnote = new newNote();
         //newnote.color = "black";
         newnote.radiusBefore = 1.0f;
-        newnote.angle = UnityEngine.Random.value * 100.0f;
-        newnote.DecisionTime = 7.1f;
+        newnote.angle = UnityEngine.Random.value * 2.0f * 10.0f;//値がマイナスだと0になるため10倍 -1~1をとるため2倍
+        //Debug.Log(newnote.angle);
+        newnote.DecisionTime = 5.1f;
         newnote.EmitTime = AudioManager.Instance.GetTimeBGM();
-        newnote.RadiusIncrement = 0.01f;
-        newnote.scale = 0.5f;
+        newnote.RadiusIncrement = 0.025f;
+        newnote.scale = 0.025f;
         newnote.TargetName = TargetName;
         this.CalcCordinate(targetPos,newnote);
         notes.Add(newnote);
@@ -132,12 +138,20 @@ public class AutoNotes{
     }
     
     public void CalcCordinate(Vector3 targetPos,newNote newnote){
+        /*
         float radius = newnote.radiusBefore + newnote.RadiusIncrement *  newnote.DecisionTime; //r2 = r0 + in
         newnote.radius = radius;
+        angle = (newnote.angle /10.0f) - 1.0f;// * Mathf.Deg2Rad;
         h = 0.5f + radius * Mathf.Asin(angle);//直角三角形の高さ r1+r2*sinθ
+        //Debug.Log(angle);
         b = 0.5f + radius;//円の中心と中心の長さ　直角三角形の斜辺 r1+r2
         a = Mathf.Pow(b,2) - h;//直角三角形のx軸の長さ b^2 - h
         newnote.posx = targetPos.x + a;
         newnote.posy = targetPos.y + h;
+        //Debug.Log("angle:"+angle + "  posx:"+newnote.posx);
+        */
+        newnote.posx = targetPos.x;
+        newnote.posy = targetPos.y;
+        newnote.posz = targetPos.z;
     }
 }
