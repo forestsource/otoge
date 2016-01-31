@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
             //Notes management
             NotesManager = new NotesManager();
             NotesManager.Init(); 
+            NotesManager.CreateNotes();
         } else if(Application.loadedLevelName == "create_note"){
             AutoNotes = new AutoNotes();
             AutoNotes.Init();

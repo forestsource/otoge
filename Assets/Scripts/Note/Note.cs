@@ -19,19 +19,23 @@ public class Note : MonoBehaviour{
     private float b;
     private float h;
     private Transform targettranform;
-    private SphereCollider sc;
+    public SphereCollider sc;
     
     public void Init(GameObject noteobject){
         rend = GetComponent<Renderer>();
-        this.transform.position = new Vector3(posx,posy,0);
+        this.transform.position = new Vector3(posx,posy,2.3f);
         this.transform.SetLocalScaleXYZ(scale);
         this.GetComponent<SphereCollider>().radius = radiusBefore;
-        //rend.material.color = color; 
+        //rend.material.color = color;
     }
     
     public void Move(){
+        sc = GetComponent<SphereCollider>();
+        scale = scale + RadiusIncrement;
         this.transform.AddLocalScaleX(RadiusIncrement);
-        this.transform.AddLocalScaleY(RadiusIncrement);
+        this.transform.AddLocalScaleZ(RadiusIncrement);
+        sc.radius = sc.radius + RadiusIncrement;
+        //Debug.Log(sc.radius);
     }
     
     public void Show(){

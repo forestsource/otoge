@@ -66,9 +66,9 @@ public class AutoNotes{
         //newnote.color = "black";
         newnote.radiusBefore = 1.0f;
         newnote.angle = UnityEngine.Random.value * 100.0f;
-        newnote.DecisionTime = 2.0f;
+        newnote.DecisionTime = 7.1f;
         newnote.EmitTime = AudioManager.Instance.GetTimeBGM();
-        newnote.RadiusIncrement = 0.1f;
+        newnote.RadiusIncrement = 0.01f;
         newnote.scale = 0.5f;
         newnote.TargetName = TargetName;
         this.CalcCordinate(targetPos,newnote);
