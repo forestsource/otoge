@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class OutJson{
     public string MusicName;
     public int NotesSum;
+	public int BPM;
     
     public void set(string name,int count){
         MusicName = name;
@@ -19,4 +20,7 @@ public class OutJson{
     public int getNotesSum(){
         return NotesSum;
     }
+	public int getBPM(){
+		return BPM;
+	}
 }

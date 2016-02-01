@@ -7,6 +7,7 @@ public class Note : MonoBehaviour{
     public float posx;
     public float posy;
     public float posz;
+	public Vector3 positionxyz;
     public float radiusBefore;
     public float radius;
     public float angle;
@@ -16,27 +17,22 @@ public class Note : MonoBehaviour{
     public float DecisionTime;
     public float RadiusIncrement;
     private Renderer rend;
-    private float a;
-    private float b;
-    private float h;
+	public float BPM;
     private Transform targettranform;
     public SphereCollider sc;
     
     public void Init(GameObject noteobject){
         rend = GetComponent<Renderer>();
         this.transform.position = new Vector3(posx,posy,posz);
-        this.transform.SetLocalScaleXYZ(scale);
-        this.GetComponent<SphereCollider>().radius = radiusBefore;
-        //rend.material.color = color;
+        this.transform.SetLocalScaleXYZ(1);
+        this.GetComponent<SphereCollider>().radius = 0.5f;
+		this.BPM = 0f;
     }
     
     public void Move(){
-        sc = GetComponent<SphereCollider>();
-        //scale = scale + RadiusIncrement;
-        this.transform.AddLocalScaleX(RadiusIncrement);
-        this.transform.AddLocalScaleZ(RadiusIncrement);
-        //sc.radius = sc.radius + RadiusIncrement;
-        //Debug.Log(sc.radius);
+		GameObject tobj = GameObject.Find(TargetName);
+		this.positionxyz = Vector3.MoveTowards (this.transform.position, tobj.transform.position, (this.DecisionTime + BPM) * Time.deltaTime );// goto taget for radius circle
+		this.transform.position = this.positionxyz;
     }
     
     public void Show(){

@@ -10,6 +10,5 @@ public class Score : MonoBehaviour {
     
 	void Update () {
         this.GetComponent<Text>().text = "Score: "+ score;
-        //Debug.Log(Text.text);	
 	}
 }
