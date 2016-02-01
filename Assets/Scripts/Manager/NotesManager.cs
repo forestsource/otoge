@@ -46,8 +46,8 @@ public class NotesManager{
 		Target = new Dictionary<string,GameObject> (){
 			{"up_left",UpLeft},
 			{"up_right",UpRight},
-			{"dowsn_left",DownLeft},
-			{"dowsn_right",DownRight}
+			{"down_left",DownLeft},
+			{"down_right",DownRight}
 
 		};
 		keyS=false;
@@ -92,7 +92,7 @@ public class NotesManager{
 			Timetable.Add(note.EmitTime);
 			notes.Add(note);
 			noteobjects.Add(noteobject);
-			Debug.Log(notes.Count);
+			//Debug.Log(notes.Count);
 		}
 		//Debug.Log(notes.Count);
 		//this.NoteDestroy(noteobject);
@@ -126,7 +126,7 @@ public class NotesManager{
 				DisplayNotesCount++;
 				Timetable.RemoveAt(0);
 			}
-		}//continu
+		}//continue
 		for(int i=0;i<DisplayNotesCount;i++){
 			//Debug.Log(i + ":"+DisplayNotesCount);
 			//Debug.Log((note.DecisionTime + note.EmitTime));
@@ -222,7 +222,7 @@ public class NotesManager{
     public bool JudgeArea(Vector3 tposition,Vector3 nposition){
 		distance = Distance (tposition, nposition);
         //Debug.Log(distance);
-        if(0.2f < distance && distance < 12f){// distance of 2 objects codinates == target radius
+        if(0.2f < distance && distance < 9f){// distance of 2 objects codinates == target radius
             return true;
         }else{
 			Debug.Log (distance);

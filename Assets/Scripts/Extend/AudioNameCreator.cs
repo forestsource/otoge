@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using UnityEditor;
-using UnityEditorInternal;
+#if UNITY_EDITOR
+	using UnityEditor;
+	using UnityEditorInternal;
+#endif
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +22,8 @@ public static class AudioNameCreator{
 	/// <summary>
 	/// オーディオのファイル名を定数で管理するクラスを作成します
 	/// </summary>
+
+	/*for compaile
 	[MenuItem(COMMAND_NAME)]
 	public static void Create()
 	{
@@ -31,7 +35,7 @@ public static class AudioNameCreator{
 		CreateScript();
 
 		EditorUtility.DisplayDialog(FILENAME, "作成が完了しました", "OK");
-	}
+	}*/
 
 	/// <summary>
 	/// スクリプトを作成します
@@ -76,16 +80,18 @@ public static class AudioNameCreator{
 		}
 
 		File.WriteAllText(EXPORT_PATH, builder.ToString(), Encoding.UTF8);
-		AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive);
+		//AssetDatabase.Refresh(ImportAssetOptions.ImportRecursive); //for compaile
 	}
 
 	/// <summary>
 	/// オーディオのファイル名を定数で管理するクラスを作成できるかどうかを取得します
 	/// </summary>
+
+	/*for compaile
 	[MenuItem(COMMAND_NAME, true)]
 	private static bool CanCreate()
 	{
 		return !EditorApplication.isPlaying && !Application.isPlaying && !EditorApplication.isCompiling;
-	}
+	}*/
 
 }
