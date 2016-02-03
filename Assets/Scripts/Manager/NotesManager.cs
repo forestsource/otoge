@@ -111,6 +111,14 @@ public class NotesManager{
 	}
 	
 	public void StartManagement(){
+		if (!AudioManager.Instance.isPlayingBGM ()) {
+			if(Input.GetKeyDown(KeyCode.Space)){
+				Application.LoadLevel("menu"); 
+			}
+		}
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			Application.LoadLevel("menu"); 
+		}
 		audiotime = AudioManager.Instance.GetTimeBGM();
 		if(NotesCount == NotesSum){
 			//Debug.Log("End Notes");

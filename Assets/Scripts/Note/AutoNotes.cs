@@ -53,7 +53,7 @@ public class AutoNotes{
         if(Input.GetKeyDown(KeyCode.X)){//down_left
             Debug.Log("X");
             this.SetNote("down_left",DownLeft.transform.position);
-        }
+        } 
         if(Input.GetKeyDown(KeyCode.M)){//down_right
             Debug.Log("M");
             this.SetNote("down_right",DownRight.transform.position);
@@ -61,8 +61,15 @@ public class AutoNotes{
 		if((AudioManager.Instance.isPlayingBGM() == false) & once){
             this.outNotes();
             once = false;
+			Application.LoadLevel("menu");
         }
-        
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			Application.LoadLevel ("menu");
+		}
+		if (Input.GetKeyDown (KeyCode.Return)) {
+			this.outNotes(); 
+			Application.LoadLevel("menu");
+		}
     }
     
     
@@ -95,6 +102,7 @@ public class AutoNotes{
         nowBGMName = AudioManager.Instance.getNowBGMName();
         JsonMapper JsonMapper = new JsonMapper();
         path = Application.persistentDataPath + "/Notes/" ;
+		Debug.Log ("save path: "+path);
         // フォルダーがない場合は作成する
         if (!Directory.Exists(path))
         {
